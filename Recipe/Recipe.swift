@@ -39,6 +39,23 @@ struct Ingredient {
         case tablespoons = "Tablespoons"
         case teaspoons = "Teaspoons"
         case none = "None"
+        
+        var singularName: String { String(rawValue.dropLast())}
+    }
+    
+    var description: String {
+        let formattedQuantity = String(format: "%g", quantity)
+            switch unit {
+            case .none:
+                let formattedName = quantity == 1 ? name : "\(name)s"
+                return "\(formattedQuantity) \(formattedName)"
+            default:
+                if quantity == 1 {
+                    return "1 \(unit.singularName) \(name)"
+                } else {
+                    return "\(formattedQuantity) \(unit.rawValue) \(name)"
+                }
+            }
     }
 }
 
@@ -46,3 +63,4 @@ struct Direction {
     var description: String
     var isOptional: Bool
 }
+
