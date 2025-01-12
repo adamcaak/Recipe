@@ -9,6 +9,8 @@ import SwiftUI
 
 struct RecipesListView: View {
     @EnvironmentObject private var recipeData: RecipeData
+    @State private var isPresented: Bool = false
+    
     let category: MainInformation.Category
     private let listBackgroundColor = AppColor.background
     private let listTextColor = AppColor.foreground
@@ -22,6 +24,15 @@ struct RecipesListView: View {
             .foregroundColor(listTextColor)
         }
         .navigationTitle(navigationTitle)
+        .toolbar(content: {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    isPresented = true
+                }, label: {
+                    Image(systemName: "plus")
+                })
+            }
+        })
     }
 }
 
