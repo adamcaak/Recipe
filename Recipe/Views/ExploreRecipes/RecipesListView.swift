@@ -10,6 +10,7 @@ import SwiftUI
 struct RecipesListView: View {
     @EnvironmentObject private var recipeData: RecipeData
     @State private var isPresented: Bool = false
+    @State private var newRecipe = Recipe()
     
     let category: MainInformation.Category
     private let listBackgroundColor = AppColor.background
@@ -31,6 +32,12 @@ struct RecipesListView: View {
                 }, label: {
                     Image(systemName: "plus")
                 })
+            }
+        })
+        .sheet(isPresented: $isPresented, content: {
+            NavigationView {
+                ModifyRecipeView(recipe: $newRecipe)
+                    .navigationTitle("Add a New Recipe")
             }
         })
     }
