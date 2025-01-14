@@ -10,9 +10,9 @@ import SwiftUI
 struct ModifyIngredientView: View {
     private let listBackgroundColor = AppColor.background
     private let listTextColor = AppColor.foreground
+    let createAction: ((Ingredient) -> Void)
     
-    @Binding var ingredient = Ingredient
-    @State var ingredient: Ingredient
+    @Binding var ingredient: Ingredient
     var body: some View {
         VStack {
             Form {
@@ -37,6 +37,13 @@ struct ModifyIngredientView: View {
                     }
                 }
                 .pickerStyle(MenuPickerStyle())
+                HStack {
+                    Spacer()
+                    Button("Save") {
+                        createAction(ingredient)
+                    }
+                    Spacer()
+                }
             }
         }
     }
@@ -51,10 +58,13 @@ extension NumberFormatter {
 }
 
 struct ModifyIngredientView_Previews: PreviewProvider {
-    @State static var emptyIngredinet = Ingredient(name: "", quantity: 1.0, unit: .none)
+    @State static var emptyIngredinet = Ingredient(name: "", quantity: 0.0, unit: .none)
     static var previews: some View {
         NavigationView {
-            ModifyIngredientView(ingredient: emptyIngredinet)
+            let addIngredientsView = ModifyIngredientView(ingredient: $emptyIngredinet) { ingredient in
+                ingredient.append(ingredient)
+                newIngredient = Ingredient(name: "", quantity: 0.0, unit: .none)
+            }
         }
     }
 }
