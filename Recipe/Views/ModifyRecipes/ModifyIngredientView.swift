@@ -11,6 +11,7 @@ struct ModifyIngredientView: View {
     private let listBackgroundColor = AppColor.background
     private let listTextColor = AppColor.foreground
     
+    @Binding var ingredient = Ingredient
     @State var ingredient: Ingredient
     var body: some View {
         VStack {
