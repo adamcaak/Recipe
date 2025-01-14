@@ -12,6 +12,7 @@ struct ModifyIngredientView: View {
     private let listTextColor = AppColor.foreground
     let createAction: ((Ingredient) -> Void)
     
+    @Binding var newIngredient = Ingredient(name: "", quantity: 0.0, unit: .none)
     @Binding var ingredient: Ingredient
     var body: some View {
         VStack {
