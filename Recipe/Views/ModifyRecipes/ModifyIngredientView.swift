@@ -6,47 +6,47 @@
 //
 
 import SwiftUI
-
 struct ModifyIngredientView: View {
-    private let listBackgroundColor = AppColor.background
-    private let listTextColor = AppColor.foreground
+    @Binding var ingredient: Ingredient
     let createAction: ((Ingredient) -> Void)
     
-    @Binding var newIngredient = Ingredient(name: "", quantity: 0.0, unit: .none)
-    @Binding var ingredient: Ingredient
+    private let listBackgroundColor = AppColor.background
+    private let listTextColor = AppColor.foreground
+    
+    @Environment(\.presentationMode) private var mode
+    
     var body: some View {
-        VStack {
-            Form {
-                TextField("Ingredient Name", text: $ingredient.name)
-                Stepper(value: $ingredient.quantity, in: 0...100, step: 0.5) {
-                    HStack {
-                        Text("Quantity")
-                        TextField("Quantity",
-                                  value: $ingredient.quantity,
-                                  formatter: NumberFormatter.decimal)
-                        .keyboardType(.numbersAndPunctuation)
-                    }
-                }
-                Picker(selection: $ingredient.unit, label:
-                        HStack {
-                    Text("Unit")
-                    Spacer()
-                    //Text(ingredient.unit.rawValue)
-                }) {
-                    ForEach(Ingredient.Unit.allCases, id: \.self) { unit in
-                            Text(unit.rawValue)
-                    }
-                }
-                .pickerStyle(MenuPickerStyle())
+        Form {
+            TextField("Ingredient Name", text: $ingredient.name)
+                .listRowBackground(listBackgroundColor)
+            Stepper(value: $ingredient.quantity, in: 0...100, step: 0.5) {
                 HStack {
-                    Spacer()
-                    Button("Save") {
-                        createAction(ingredient)
-                    }
-                    Spacer()
+                    Text("Quantity:")
+                    TextField("Quantity", value: $ingredient.quantity, formatter: NumberFormatter.decimal)
+                        .keyboardType(.numbersAndPunctuation)
+                }
+            }.listRowBackground(listBackgroundColor)
+            Picker(selection: $ingredient.unit, label: HStack {
+                Text("Unit")
+                Spacer()
+                Text(ingredient.unit.rawValue)
+            }) {
+                ForEach(Ingredient.Unit.allCases, id: \.self) { unit in
+                    Text(unit.rawValue)
                 }
             }
+            .listRowBackground(listBackgroundColor)
+            .pickerStyle(MenuPickerStyle())
+            HStack {
+                Spacer()
+                Button("Save") {
+                    createAction(ingredient)
+                    mode.wrappedValue.dismiss()
+                }
+                Spacer()
+            }.listRowBackground(listBackgroundColor)
         }
+        .foregroundColor(listTextColor)
     }
 }
 
@@ -59,13 +59,12 @@ extension NumberFormatter {
 }
 
 struct ModifyIngredientView_Previews: PreviewProvider {
-    @State static var emptyIngredinet = Ingredient(name: "", quantity: 0.0, unit: .none)
+    @State static var recipe = Recipe.testRecipes[0]
     static var previews: some View {
         NavigationView {
-            let addIngredientsView = ModifyIngredientView(ingredient: $emptyIngredinet) { ingredient in
-                ingredient.append(ingredient)
-                newIngredient = Ingredient(name: "", quantity: 0.0, unit: .none)
-            }
+            ModifyIngredientView(ingredient: $recipe.ingredients[0]) { ingredient in
+                print(ingredient)
+            }.navigationTitle("Add Ingredient")
         }
     }
 }
