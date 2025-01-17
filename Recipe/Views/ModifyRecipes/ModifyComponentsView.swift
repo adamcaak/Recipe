@@ -15,6 +15,11 @@ struct ModifyComponentsView: View {
     
     @State private var newIngredient = Ingredient(name: "", quantity: 0.0, unit: .none)
     
+    protocol ModifyComponentView: View {
+        associatedtype Component
+        init(component: Binding<Component>, createAction: @escaping (Component) -> Void)
+    }
+    
     protocol RecipeComponent {
         init ()
     }
