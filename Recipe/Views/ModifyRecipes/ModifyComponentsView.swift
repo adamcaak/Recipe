@@ -7,13 +7,17 @@
 
 import SwiftUI
 
-struct ModifyIngredientsView: View {
+struct ModifyComponentsView: View {
     @Binding var ingredients: [Ingredient]
     
     private let listBackgroundColor = AppColor.background
     private let listTextColor = AppColor.foreground
     
     @State private var newIngredient = Ingredient(name: "", quantity: 0.0, unit: .none)
+    
+    protocol RecipeComponent {
+        init ()
+    }
     
     var body: some View {
         VStack {
@@ -54,10 +58,10 @@ struct ModifyIngredientsView_Previews: PreviewProvider {
     @State static var emptyIngredients = [Ingredient]()
     static var previews: some View {
         NavigationView {
-            ModifyIngredientsView(ingredients: $recipe.ingredients)
+            ModifyComponentsView(ingredients: $recipe.ingredients)
         }
         NavigationView {
-            ModifyIngredientsView(ingredients: $emptyIngredients)
+            ModifyComponentsView(ingredients: $emptyIngredients)
         }
     }
 }
