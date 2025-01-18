@@ -26,9 +26,9 @@ struct ModifyComponentsView: View {
     
     var body: some View {
         VStack {
-            let addIngredientView = ModifyIngredientView(ingredient: $newIngredient) { ingredient in
+            let addIngredientView = ModifyIngredientView(component: $newIngredient) { ingredient in
                 ingredients.append(ingredient)
-                newIngredient = Ingredient(name: "", quantity: 0.0, unit: .none)
+                newIngredient = Ingredient()
             }.navigationTitle("Add Ingredient")
             if ingredients.isEmpty {
                 Spacer()
