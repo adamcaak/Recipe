@@ -7,66 +7,76 @@
 
 import SwiftUI
 
-struct ModifyComponentsView: View {
-    @Binding var ingredients: [Ingredient]
+protocol RecipeComponent: CustomStringConvertible {
+    init()
+    static func singularName() -> String
+    static func pluralName() -> String
+}
+
+extension RecipeComponent {
+    static func singularName() -> String {
+        String(describing: self).lowercased()
+    }
+    static func pluralName() -> String {
+        singularName() + "s"
+    }
+}
+
+protocol ModifyComponentView: View {
+    associatedtype Component
+    init(component: Binding<Component>, createAction: @escaping (Component) -> Void)
+}
+
+struct ModifyComponentsView<Component: RecipeComponent, DestinationView: ModifyComponentView>: View where DestinationView.Component == Component {
+    @Binding var components: [Component]
     
     private let listBackgroundColor = AppColor.background
     private let listTextColor = AppColor.foreground
-    
-    @State private var newIngredient = Ingredient(name: "", quantity: 0.0, unit: .none)
-    
-    protocol ModifyComponentView<Component: RecipeComponent, DestinationView: ModifyComponentView>: View {
-        associatedtype Component
-        init(component: Binding<Component>, createAction: @escaping (Component) -> Void)
-    }
-    
-    protocol RecipeComponent {
-        init ()
-    }
+
+    @State private var newComponent = Component()
     
     var body: some View {
         VStack {
-            let addIngredientView = ModifyIngredientView(component: $newIngredient) { ingredient in
-                ingredients.append(ingredient)
-                newIngredient = Ingredient()
-            }.navigationTitle("Add Ingredient")
-            if ingredients.isEmpty {
+            let addComponentView = DestinationView(component: $newComponent) { component in
+                components.append(component)
+                newComponent = Component()
+            }.navigationTitle("Add \(Component.singularName().capitalized)")
+            if components.isEmpty {
                 Spacer()
-                NavigationLink("Add the first ingredient", destination: addIngredientView)
+                NavigationLink("Add the first \(Component.singularName())", destination: addComponentView)
                 Spacer()
             } else {
                 HStack {
-                    Text("Ingredients")
+                    Text(Component.pluralName().capitalized)
                         .font(.title)
                         .padding()
                     Spacer()
                 }
                 List {
-                    ForEach(ingredients.indices, id: \.self) { index in
-                        let ingredient = ingredients[index]
-                        Text(ingredient.description)
+                    ForEach(components.indices, id: \.self) { index in
+                        let component = components[index]
+                        Text(component.description)
                     }
                     .listRowBackground(listBackgroundColor)
-                    NavigationLink("Add another Ingredient",
-                                   destination: addIngredientView)
-                    .buttonStyle(PlainButtonStyle())
-                    .listRowBackground(listBackgroundColor)
+                    NavigationLink("Add another \(Component.singularName())",
+                                   destination: addComponentView)
+                        .buttonStyle(PlainButtonStyle())
+                        .listRowBackground(listBackgroundColor)
                 }.foregroundColor(listTextColor)
             }
         }
     }
 }
 
-struct ModifyIngredientsView_Previews: PreviewProvider {
-    @State static var emptyIngredient = Ingredient(name: "", quantity: 0.0, unit: .none)
+struct ModifyComponentsView_Previews: PreviewProvider {
     @State static var recipe = Recipe.testRecipes[1]
     @State static var emptyIngredients = [Ingredient]()
     static var previews: some View {
         NavigationView {
-            ModifyComponentsView<Ingredient, ModifyIngredientView>(ingredients: $emptyIngredients)
+            ModifyComponentsView<Ingredient, ModifyIngredientView>(components: $recipe.ingredients)
         }
         NavigationView {
-            ModifyComponentsView<Ingredient, ModifyIngredientView>(ingredients: $recipe.ingredients)
+            ModifyComponentsView<Ingredient, ModifyIngredientView>(components: $emptyIngredients)
         }
     }
 }

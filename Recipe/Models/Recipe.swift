@@ -53,6 +53,17 @@ struct Ingredient: RecipeComponent {
     var quantity: Double
     var unit: Unit // Ounces, Grams, Cups, Tablespoons, Teaspoons, None
     
+    init(name: String, quantity: Double, unit: Unit) {
+        self.name = name
+        self.quantity = quantity
+        self.unit = unit
+    }
+    
+    init() {
+        self.init(name: "", quantity: 1.0, unit: .none)
+    }
+    
+    
     enum Unit: String, CaseIterable {
         case ounces = "Ounces"
         case grams = "Grams"

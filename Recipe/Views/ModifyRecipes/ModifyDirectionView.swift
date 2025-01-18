@@ -7,17 +7,23 @@
 
 import SwiftUI
 
-struct ModifyDirectionView: View {
+struct ModifyDirectionView: ModifyComponentView {
     @Binding var direction: Direction
     let createAction: (Direction) -> Void
     
+    init(component: Binding<Direction>, createAction: @escaping (Direction) -> Void) {
+        self._direction = component
+        self.createAction = createAction
+    }
+
     private let listBackgroundColor = AppColor.background
     private let listTextColor = AppColor.foreground
-    
+
     @Environment(\.presentationMode) private var mode
+    
     var body: some View {
         Form {
-            TextField("Direction description", text: $direction.description)
+            TextField("Direction Description", text: $direction.description)
                 .listRowBackground(listBackgroundColor)
             Toggle("Optional", isOn: $direction.isOptional)
                 .listRowBackground(listBackgroundColor)
@@ -35,10 +41,13 @@ struct ModifyDirectionView: View {
 }
 
 struct ModifyDirectionView_Previews: PreviewProvider {
-    @State static var emptyDirection = Direction(description: "", isOptional: false)
+    @State static var recipe = Recipe.testRecipes[0]
+
     static var previews: some View {
         NavigationView {
-            ModifyDirectionView(component: $emptyDirection) { _ in return }
+            ModifyDirectionView(component: $recipe.directions[0]) { direction in
+                print(direction)
+            }
         }
     }
 }
