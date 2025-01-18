@@ -65,12 +65,12 @@ extension NumberFormatter {
 }
 
 struct ModifyIngredientView_Previews: PreviewProvider {
-    @State static var recipe = Recipe.testRecipes[0]
+    @State static var emptyIngredient = Recipe.testRecipes[0].ingredients[0]
     static var previews: some View {
         NavigationView {
-            ModifyIngredientView(ingredient: $recipe.ingredients[0]) { ingredient in
+            ModifyIngredientView(component: $emptyIngredient) { ingredient in
                 print(ingredient)
-            }.navigationTitle("Add Ingredient")
-        }
+            }
+        }.navigationTitle("Add Ingredient")
     }
 }
