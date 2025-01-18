@@ -15,7 +15,7 @@ struct ModifyComponentsView: View {
     
     @State private var newIngredient = Ingredient(name: "", quantity: 0.0, unit: .none)
     
-    protocol ModifyComponentView: View {
+    protocol ModifyComponentView<Component: RecipeComponent, DestinationView: ModifyComponentView>: View {
         associatedtype Component
         init(component: Binding<Component>, createAction: @escaping (Component) -> Void)
     }
