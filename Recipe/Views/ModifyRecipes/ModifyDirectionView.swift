@@ -38,7 +38,7 @@ struct ModifyDirectionView_Previews: PreviewProvider {
     @State static var emptyDirection = Direction(description: "", isOptional: false)
     static var previews: some View {
         NavigationView {
-            ModifyDirectionView(direction: $emptyDirection) { _ in return }
+            ModifyDirectionView(component: $emptyDirection) { _ in return }
         }
     }
 }
