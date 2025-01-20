@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RecipeDetailView: View {
-    let recipe: Recipe
+    @Binding var recipe: Recipe
     private let listBackgroundColor = AppColor.background
     private let listTextColor = AppColor.foreground
     
