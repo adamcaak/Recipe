@@ -67,6 +67,7 @@ struct RecipeDetailView: View {
                                 isPresenting = false
                             }
                         }
+                        ToolbarItem(placement: .navigationBarLeading) { Text("") }
                     }
                     .navigationTitle(Text("Edit Recipe"))
             }
