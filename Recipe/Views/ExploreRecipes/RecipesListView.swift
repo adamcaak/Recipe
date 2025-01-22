@@ -10,10 +10,10 @@ import SwiftUI
 struct RecipesListView: View {
     @EnvironmentObject private var recipeData: RecipeData
     let viewStyle: ViewStyle
-
+    
     @State private var isPresenting = false
     @State private var newRecipe = Recipe()
-
+    
     private let listBackgroundColor = AppColor.background
     private let listTextColor = AppColor.foreground
     
@@ -48,10 +48,11 @@ struct RecipesListView: View {
                         }
                         ToolbarItem(placement: .confirmationAction) {
                             if newRecipe.isValid {
-                                Button("Add") {
-                                    recipeData.add(recipe: newRecipe)
-                                    isPresenting = false
+                                if case .favorites = viewStyle {
+                                    newRecipe.isFavorite = true
                                 }
+                                recipeData.add(recipe: newRecipe)
+                                isPresenting = false
                             }
                         }
                     })

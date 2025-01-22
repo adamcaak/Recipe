@@ -13,7 +13,7 @@ struct Recipe: Identifiable {
     var mainInformation: MainInformation
     var ingredients: [Ingredient]
     var directions: [Direction]
-    var isFavorite: Bool = false
+    var isFavorite = false
     
     init(mainInformation: MainInformation, ingredients: [Ingredient], directions: [Direction]) {
         self.mainInformation = mainInformation
