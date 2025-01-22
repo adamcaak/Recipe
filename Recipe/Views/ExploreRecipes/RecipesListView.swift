@@ -10,11 +10,10 @@ import SwiftUI
 struct RecipesListView: View {
     @EnvironmentObject private var recipeData: RecipeData
     let viewStyle: ViewStyle
-    
-    @State private var isPresented: Bool = false
+
+    @State private var isPresenting = false
     @State private var newRecipe = Recipe()
-    
-    //let category: MainInformation.Category
+
     private let listBackgroundColor = AppColor.background
     private let listTextColor = AppColor.foreground
     
@@ -32,26 +31,26 @@ struct RecipesListView: View {
                 Button(action: {
                     newRecipe = Recipe()
                     newRecipe.mainInformation.category = recipes.first?.mainInformation.category ?? .breakfast
-                    isPresented = true
+                    isPresenting = true
                 }, label: {
                     Image(systemName: "plus")
                 })
             }
         })
-        .sheet(isPresented: $isPresented, content: {
+        .sheet(isPresented: $isPresenting, content: {
             NavigationView {
                 ModifyRecipeView(recipe: $newRecipe)
                     .toolbar(content: {
                         ToolbarItem(placement: .cancellationAction) {
                             Button("Dismiss") {
-                                isPresented = false
+                                isPresenting = false
                             }
                         }
                         ToolbarItem(placement: .confirmationAction) {
                             if newRecipe.isValid {
                                 Button("Add") {
                                     recipeData.add(recipe: newRecipe)
-                                    isPresented = false
+                                    isPresenting = false
                                 }
                             }
                         }
