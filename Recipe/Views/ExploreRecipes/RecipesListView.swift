@@ -26,7 +26,7 @@ struct RecipesListView: View {
             .foregroundColor(listTextColor)
         }
         .navigationTitle(navigationTitle)
-        .toolbar(content: {
+        .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
                     newRecipe = Recipe()
@@ -36,11 +36,12 @@ struct RecipesListView: View {
                     Image(systemName: "plus")
                 })
             }
-        })
+        }
         .sheet(isPresented: $isPresenting, content: {
             NavigationView {
                 ModifyRecipeView(recipe: $newRecipe)
-                    .toolbar(content: {
+                    .navigationTitle("Add a New Recipe")
+                    .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
                             Button("Dismiss") {
                                 isPresenting = false
@@ -55,8 +56,8 @@ struct RecipesListView: View {
                                 isPresenting = false
                             }
                         }
-                    })
-                    .navigationTitle("Add a New Recipe")
+                    }
+                    
             }
         })
     }
