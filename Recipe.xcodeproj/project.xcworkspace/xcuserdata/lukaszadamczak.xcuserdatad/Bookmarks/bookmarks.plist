@@ -12,13 +12,13 @@
 					<key>EndingColumnNumber</key>
 					<string>0</string>
 					<key>EndingLineNumber</key>
-					<string>44</string>
+					<string>102</string>
 					<key>StartingColumnNumber</key>
 					<string>0</string>
 					<key>StartingLineNumber</key>
-					<string>43</string>
+					<string>102</string>
 					<key>Timestamp</key>
-					<string>759275452.986418</string>
+					<string>759531707.804247</string>
 				</dict>
 				<key>rebasable-url</key>
 				<dict>
@@ -34,20 +34,14 @@
 			<key>text-context</key>
 			<dict>
 				<key>focused</key>
-				<string>                    .toolbar {
-</string>
+				<string></string>
 				<key>leading</key>
-				<string>                ModifyRecipeView(recipe: $newRecipe)
-                    .navigationTitle("Add a New Recipe")
+				<string>    }
+}
 </string>
 				<key>trailing</key>
-				<string>                        ToolbarItem(placement: .cancellationAction) {
-                            Button("Dismiss") {
-                                isPresenting = false
-</string>
+				<string></string>
 			</dict>
-			<key>title</key>
-			<string>Error: Ambiguous use of 'toolbar(content:)'</string>
 			<key>type</key>
 			<string>bookmark</string>
 		</dict>
@@ -59,13 +53,13 @@
 					<key>EndingColumnNumber</key>
 					<string>0</string>
 					<key>EndingLineNumber</key>
-					<string>44</string>
+					<string>102</string>
 					<key>StartingColumnNumber</key>
 					<string>0</string>
 					<key>StartingLineNumber</key>
-					<string>43</string>
+					<string>102</string>
 					<key>Timestamp</key>
-					<string>759275452.98638</string>
+					<string>759531707.804265</string>
 				</dict>
 				<key>rebasable-url</key>
 				<dict>
@@ -81,17 +75,13 @@
 			<key>text-context</key>
 			<dict>
 				<key>focused</key>
-				<string>                    .toolbar {
-</string>
+				<string></string>
 				<key>leading</key>
-				<string>                ModifyRecipeView(recipe: $newRecipe)
-                    .navigationTitle("Add a New Recipe")
+				<string>    }
+}
 </string>
 				<key>trailing</key>
-				<string>                        ToolbarItem(placement: .cancellationAction) {
-                            Button("Dismiss") {
-                                isPresenting = false
-</string>
+				<string></string>
 			</dict>
 			<key>title</key>
 			<string>Error: Ambiguous use of 'toolbar(content:)'</string>

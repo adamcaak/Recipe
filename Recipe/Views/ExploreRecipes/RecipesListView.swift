@@ -26,7 +26,7 @@ struct RecipesListView: View {
             .foregroundColor(listTextColor)
         }
         .navigationTitle(navigationTitle)
-        .toolbar {
+        .toolbar(content: {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
                     newRecipe = Recipe()
@@ -36,12 +36,11 @@ struct RecipesListView: View {
                     Image(systemName: "plus")
                 })
             }
-        }
+        })
         .sheet(isPresented: $isPresenting, content: {
             NavigationView {
                 ModifyRecipeView(recipe: $newRecipe)
-                    .navigationTitle("Add a New Recipe")
-                    .toolbar {
+                    .toolbar(content: {
                         ToolbarItem(placement: .cancellationAction) {
                             Button("Dismiss") {
                                 isPresenting = false
@@ -49,22 +48,20 @@ struct RecipesListView: View {
                         }
                         ToolbarItem(placement: .confirmationAction) {
                             if newRecipe.isValid {
-                                if case .favorites = viewStyle {
-                                    newRecipe.isFavorite = true
+                                Button("Add") {
+                                    recipeData.add(recipe: newRecipe)
+                                    isPresenting = false
                                 }
-                                recipeData.add(recipe: newRecipe)
-                                isPresenting = false
                             }
                         }
-                    }
-                    
+                    })
+                    .navigationTitle("Add a New Recipe")
             }
         })
     }
 }
 
 extension RecipesListView {
-    
     enum ViewStyle {
         case favorites
         case singleCategory(MainInformation.Category)
@@ -100,7 +97,6 @@ struct RecipesListView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             RecipesListView(viewStyle: .singleCategory(.breakfast))
-                .environmentObject(RecipeData())
-        }
+        }.environmentObject(RecipeData())
     }
 }
