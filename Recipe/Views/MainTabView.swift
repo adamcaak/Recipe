@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MainTabView: View {
     @StateObject var recipeData = RecipeData()
-
+    
     var body: some View {
         TabView {
             RecipeCategoryGridView()
