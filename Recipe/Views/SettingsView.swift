@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SettingsView: View {
     
-    @State private var hideOptionalStep: Bool = false
+    @AppStorage("hideOptionalSteps") private var hideOptionalSteps: Bool = false
     @AppStorage("listBackgroundColor") private var listBackgroundColor = AppColor.background
     @AppStorage("listTextColor") private var listTextColor = AppColor.foreground
     
@@ -22,7 +22,7 @@ struct SettingsView: View {
                 ColorPicker("Text Color", selection: $listTextColor)
                     .padding()
                     .listRowBackground(listBackgroundColor)
-                Toggle("Hidden Optional Steps", isOn: $hideOptionalStep)
+                Toggle("Hidden Optional Steps", isOn: $hideOptionalSteps)
                     .padding()
                     .listRowBackground(listBackgroundColor)
             }
