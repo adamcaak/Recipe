@@ -22,6 +22,9 @@ struct MainTabView: View {
             
         }
         .environmentObject(recipeData)
+        .onAppear {
+            recipeData.loadRecipes()
+        }
     }
 }
 struct MainTabView_Previews: PreviewProvider {

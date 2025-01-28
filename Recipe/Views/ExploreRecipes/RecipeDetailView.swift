@@ -9,6 +9,7 @@ import SwiftUI
 
 struct RecipeDetailView: View {
     @Binding var recipe: Recipe
+    @StateObject var recipeData = RecipeData()
     @AppStorage("hideOptionalSteps") private var hideOptionalSteps: Bool = false
     @AppStorage("listBackgroundColor") private var listBackgroundColor = AppColor.background
     @AppStorage("listTextColor") private var listTextColor = AppColor.foreground
@@ -78,6 +79,9 @@ struct RecipeDetailView: View {
                         ToolbarItem(placement: .navigationBarLeading) { Text("") }
                     }
                     .navigationTitle(Text("Edit Recipe"))
+            }
+            .onDisappear {
+                recipeData.saveRecipes()
             }
         }
     }
